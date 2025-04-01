@@ -47,27 +47,27 @@ export class JiraService {
   }
 
   /**
-   * Get a Jira issue by key
+   * Get a Jira issue by key using REST API v2
    */
   async getIssue(issueKey: string): Promise<JiraIssue> {
-    const endpoint = `/rest/api/3/issue/${issueKey}`;
+    const endpoint = `/rest/api/2/issue/${issueKey}`;
     const response = await this.request<JiraIssue>(endpoint);
     writeLogs(`jira-issue-${issueKey}.json`, response);
     return response;
   }
 
   /**
-   * Search for Jira issues using JQL
+   * Search for Jira issues using JQL with REST API v2
    */
   async searchIssues(params: JiraSearchParams): Promise<JiraSearchResponse> {
-    const endpoint = `/rest/api/3/search`;
+    const endpoint = `/rest/api/2/search`;
     const response = await this.request<JiraSearchResponse>(endpoint, 'POST', params);
     writeLogs(`jira-search-${new Date().toISOString()}.json`, response);
     return response;
   }
 
   /**
-   * Get issues assigned to the current user
+   * Get issues assigned to the current user using REST API v2
    */
   async getAssignedIssues(projectKey?: string, maxResults: number = 50): Promise<JiraSearchResponse> {
     const jql = projectKey 
@@ -82,7 +82,7 @@ export class JiraService {
   }
 
   /**
-   * Get issues by type
+   * Get issues by type using REST API v2
    */
   async getIssuesByType(issueType: string, projectKey?: string, maxResults: number = 50): Promise<JiraSearchResponse> {
     const jql = projectKey 
@@ -97,19 +97,19 @@ export class JiraService {
   }
 
   /**
-   * Get list of projects
+   * Get list of projects using REST API v2
    */
   async getProjects(): Promise<JiraProject[]> {
-    const endpoint = `/rest/api/3/project`;
+    const endpoint = `/rest/api/2/project`;
     const response = await this.request<JiraProject[]>(endpoint);
     return response;
   }
   
   /**
-   * Get list of issue types
+   * Get list of issue types using REST API v2
    */
   async getIssueTypes(): Promise<JiraIssueTypeResponse> {
-    const endpoint = `/rest/api/3/issuetype`;
+    const endpoint = `/rest/api/2/issuetype`;
     const response = await this.request<JiraIssueTypeResponse>(endpoint);
     return response;
   }
